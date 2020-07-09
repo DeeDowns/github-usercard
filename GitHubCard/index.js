@@ -17,19 +17,14 @@ import axios from 'axios'
   STEP 4: Pass the data received from Github into your function,
     and append the returned markup to the DOM as a child of .cards
 */
-
-const cardsEntryPoint = document.querySelector('.cards')
-console.log(cardsEntryPoint)
-
-// const card = cardMaker()
-
+const cards = document.querySelector('.cards')
 
 
 const myGitHubURL = 'https://api.github.com/users/DeeDowns'
 
 axios.get(myGitHubURL)
   .then(function (value) {
-    console.log(value.data);
+    // console.log(value.data);
     const name = value.data.name;
     const username = value.data.login;
     const location = value.data.location;
@@ -37,59 +32,16 @@ axios.get(myGitHubURL)
     const followingCount = value.data.following;
     const bio = value.data.bio; 
     const profilePic = value.data.avatar_url;
-    const profile = value.data.html_url
+    const profile = value.data.url
 
   })
   .catch(function (error) {
     console.log(error)
   })
 
-  
-// const fakeCardData = [{
-//   name: 'dee',
-//   username: 'deedowns',
-//   location: 'fl',
-//   followersCount: ''
-// }
-// ]
 
 
 
-
-function cardMaker(userInfo) {
-
-  const userCard = document.createElement('div');
-  const userImg = document.createElement('img');
-  const userHeading = document.createElement('h3');
-  const userSubHeading = document.createElement('h4');
-  const userLocation = document.createElement('p');
-  const userProfileLink = document.createElement('a');
-  const userFollowers = document.createElement('p');
-  const userFollowing = document.createElement('p');
-  const userBio = document.createElement('p');
-
-  userImg.src = userInfo.profilePic;
-  userHeading.textContent = userInfo.name;
-  userSubHeading.textContent = userInfo.username;
-  userLocation.textContent = userInfo.location;
-  userProfileLink.textContent = userInfo.profile;
-  userProfileLink.href = userInfo.profile;
-  userFollowers.textContent = userInfo.followersCount;
-  userFollowing.textContent = userInfo.followingCount;
-  userBio.textContent = userInfo.bio;
-
-  userCard.appendChild(userImg)
-  userCard.appendChild(userHeading)
-  userCard.appendChild(userSubHeading)
-  userCard.appendChild(userLocation)
-  userCard.appendChild(userProfileLink)
-  userCard.appendChild(userFollowers)
-  userCard.appendChild(userFollowing)
-  userCard.appendChild(userBio)
-
-} 
-
-// cardMaker(myGitHubURL)
 
 
 /*
@@ -124,6 +76,57 @@ const followersArray = [];
       </div>
     </div>
 */
+
+function cardMaker(obj) {
+
+  const card = document.createElement('div');
+  const img = document.createElement('img');
+  const cardInfo = document.createElement('div');
+  const name= document.createElement('h3');
+  const username = document.createElement('p');
+  const location = document.createElement('p');
+  const profile = document.createElement('a');
+  const githubA = document.createElement('a');
+  const followers = document.createElement('p');
+  const following = document.createElement('p');
+  const bio = document.createElement('p');
+
+  
+  card.className = 'card';
+  cardInfo.className = 'card-info';
+  name.className = 'name';
+  username.className = 'username';
+
+  img.src = obj.avatar_url;
+  name.textContent = obj.name;
+  username.textContent = obj.login;
+  location.textContent = obj.location;
+  profile.textContent = githubA;
+  githubA.href = obj.url;
+  githubA.textContent = obj.url;
+  followers.textContent = obj.followers;
+  following.textContent = obj.following;
+  bio.textContent = obj.bio;
+
+
+  card.appendChild(img)
+  card.appendChild(cardInfo)
+  cardInfo.appendChild(name)
+  cardInfo.appendChild(username)
+  cardInfo.appendChild(location)
+  cardInfo.appendChild(profile)
+  profile.appendChild(githubA)
+  cardInfo.appendChild(followers)
+  cardInfo.appendChild(following)
+  cardInfo.appendChild(bio)
+
+  console.log(card)
+  return card 
+} 
+
+// cards.appendChild(cardMaker(myGitHubURL))
+const myCard = cardMaker(myGitHubURL);
+cards.appendChild(myCard)
 
 /*
   List of LS Instructors Github username's:
