@@ -1,7 +1,8 @@
+import axios from 'axios'
 /*
   STEP 1: using axios, send a GET request to the following URL
     (replacing the placeholder with your Github name):
-    https://api.github.com/users/<your name>
+    https://api.github.com/users/<DeeDowns>
 */
 
 /*
@@ -16,6 +17,80 @@
   STEP 4: Pass the data received from Github into your function,
     and append the returned markup to the DOM as a child of .cards
 */
+
+const cardsEntryPoint = document.querySelector('.cards')
+console.log(cardsEntryPoint)
+
+// const card = cardMaker()
+
+
+
+const myGitHubURL = 'https://api.github.com/users/DeeDowns'
+
+axios.get(myGitHubURL)
+  .then(function (value) {
+    console.log(value.data);
+    const name = value.data.name;
+    const username = value.data.login;
+    const location = value.data.location;
+    const followersCount = value.data.followers;
+    const followingCount = value.data.following;
+    const bio = value.data.bio; 
+    const profilePic = value.data.avatar_url;
+    const profile = value.data.html_url
+
+  })
+  .catch(function (error) {
+    console.log(error)
+  })
+
+  
+// const fakeCardData = [{
+//   name: 'dee',
+//   username: 'deedowns',
+//   location: 'fl',
+//   followersCount: ''
+// }
+// ]
+
+
+
+
+function cardMaker(userInfo) {
+
+  const userCard = document.createElement('div');
+  const userImg = document.createElement('img');
+  const userHeading = document.createElement('h3');
+  const userSubHeading = document.createElement('h4');
+  const userLocation = document.createElement('p');
+  const userProfileLink = document.createElement('a');
+  const userFollowers = document.createElement('p');
+  const userFollowing = document.createElement('p');
+  const userBio = document.createElement('p');
+
+  userImg.src = userInfo.profilePic;
+  userHeading.textContent = userInfo.name;
+  userSubHeading.textContent = userInfo.username;
+  userLocation.textContent = userInfo.location;
+  userProfileLink.textContent = userInfo.profile;
+  userProfileLink.href = userInfo.profile;
+  userFollowers.textContent = userInfo.followersCount;
+  userFollowing.textContent = userInfo.followingCount;
+  userBio.textContent = userInfo.bio;
+
+  userCard.appendChild(userImg)
+  userCard.appendChild(userHeading)
+  userCard.appendChild(userSubHeading)
+  userCard.appendChild(userLocation)
+  userCard.appendChild(userProfileLink)
+  userCard.appendChild(userFollowers)
+  userCard.appendChild(userFollowing)
+  userCard.appendChild(userBio)
+
+} 
+
+// cardMaker(myGitHubURL)
+
 
 /*
   STEP 5: Now that you have your own card getting added to the DOM, either
