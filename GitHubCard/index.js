@@ -13,10 +13,7 @@ import axios from 'axios'
     Skip to STEP 3.
 */
 
-/*
-  STEP 4: Pass the data received from Github into your function,
-    and append the returned markup to the DOM as a child of .cards
-*/
+
 const cards = document.querySelector('.cards')
 
 
@@ -25,14 +22,10 @@ const myGitHubURL = 'https://api.github.com/users/DeeDowns'
 axios.get(myGitHubURL)
   .then(function (value) {
     // console.log(value.data);
-    const name = value.data.name;
-    const username = value.data.login;
-    const location = value.data.location;
-    const followersCount = value.data.followers;
-    const followingCount = value.data.following;
-    const bio = value.data.bio; 
-    const profilePic = value.data.avatar_url;
-    const profile = value.data.url
+    let newCard = value.data
+    cards.appendChild(cardMaker(newCard))
+
+
 
   })
   .catch(function (error) {
@@ -41,6 +34,11 @@ axios.get(myGitHubURL)
 
 
 
+
+/*
+  STEP 4: Pass the data received from Github into your function,
+    and append the returned markup to the DOM as a child of .cards
+*/
 
 
 
@@ -124,9 +122,8 @@ function cardMaker(obj) {
   return card 
 } 
 
-// cards.appendChild(cardMaker(myGitHubURL))
-const myCard = cardMaker(myGitHubURL);
-cards.appendChild(myCard)
+// const myCard = cardMaker(myGitHubURL);
+// cards.appendChild(myCard)
 
 /*
   List of LS Instructors Github username's:
