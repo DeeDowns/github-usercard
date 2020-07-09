@@ -127,7 +127,7 @@ function cardMaker(obj) {
   username.textContent = obj.login;
   location.textContent = `Location: ${obj.location}`;
   profile.textContent = 'Profile:'
-  githubA.href = obj.url;
+  githubA.href = obj.html_url;
   githubA.textContent = obj.url;
   followers.textContent = `Followers: ${obj.followers}`;
   following.textContent = `Following: ${obj.following}`;
