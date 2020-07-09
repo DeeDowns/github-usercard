@@ -12,35 +12,10 @@ import axios from 'axios'
 
     Skip to STEP 3.
 */
-
-
-const cards = document.querySelector('.cards')
-
-
-const myGitHubURL = 'https://api.github.com/users/DeeDowns'
-
-axios.get(myGitHubURL)
-  .then(function (value) {
-    // console.log(value.data);
-    let newCard = value.data
-    cards.appendChild(cardMaker(newCard))
-
-
-
-  })
-  .catch(function (error) {
-    console.log(error)
-  })
-
-
-
-
 /*
   STEP 4: Pass the data received from Github into your function,
     and append the returned markup to the DOM as a child of .cards
 */
-
-
 
 /*
   STEP 5: Now that you have your own card getting added to the DOM, either
@@ -53,7 +28,59 @@ axios.get(myGitHubURL)
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const cards = document.querySelector('.cards')
+
+
+const myGitHubURL = 'https://api.github.com/users/DeeDowns'
+
+axios.get(myGitHubURL)
+  .then(function (value) {
+    // console.log(value.data);
+    let newCard = value.data
+    cards.appendChild(cardMaker(newCard))
+  })
+  .catch(function (error) {
+    console.log(error)
+  })
+
+  /*
+  List of LS Instructors Github username's:
+    tetondan
+    dustinmyers
+    justsml
+    luishrd
+    bigknell
+*/
+
+const followersArray = [
+  'tetondan',
+  'cladams0203',
+  'dustinmyers',
+  'justsml',
+  'bigknell',
+  'luishrd'
+];
+
+
+const user1 = 'https://api.github.com/users/tetondan'
+
+console.log(followersArray)
+
+followersArray.forEach(user => {
+  axios.get(`https://api.github.com/users/${user}`)
+  .then(function (value) {
+    // console.log(value)
+    const userCard = value.data;
+    cards.appendChild(cardMaker(userCard))
+    
+  })
+  .catch(function (error) {
+    console.log(error)
+  })
+
+})
+
+
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -98,13 +125,13 @@ function cardMaker(obj) {
   img.src = obj.avatar_url;
   name.textContent = obj.name;
   username.textContent = obj.login;
-  location.textContent = obj.location;
-  profile.textContent = githubA;
+  location.textContent = `Location: ${obj.location}`;
+  profile.textContent = 'Profile:'
   githubA.href = obj.url;
   githubA.textContent = obj.url;
-  followers.textContent = obj.followers;
-  following.textContent = obj.following;
-  bio.textContent = obj.bio;
+  followers.textContent = `Followers: ${obj.followers}`;
+  following.textContent = `Following: ${obj.following}`;
+  bio.textContent = `Bio: ${obj.bio}`;
 
 
   card.appendChild(img)
@@ -125,11 +152,4 @@ function cardMaker(obj) {
 // const myCard = cardMaker(myGitHubURL);
 // cards.appendChild(myCard)
 
-/*
-  List of LS Instructors Github username's:
-    tetondan
-    dustinmyers
-    justsml
-    luishrd
-    bigknell
-*/
+
